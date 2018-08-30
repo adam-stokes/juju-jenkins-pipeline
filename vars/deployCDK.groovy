@@ -9,10 +9,15 @@ def call(String controller,
          String model,
          String bundle,
          String version_overlay,
-         String bundle_channel = 'edge') {
+         String bundle_channel = 'edge',
+         Boolean allow_privileged = false) {
     sh "juju add-model -c ${controller} ${model}"
-    sh "juju deploy -m ${controller}:${model} ${bundle} --overlay ${version_overlay} --channel ${bundle_channel}"
-    sh "juju config -m ${controller}:${model} kubernetes-master allow-privileged=true"
-    sh "juju config -m ${controller}:${model} kubernetes-worker allow-privileged=true"
-    sh "juju-wait -e ${controller}:${model} -w"
+    sh "juju deploy -m ${controller}:${model} ${bundle} --overlay ${version_overlay} --channel ${bundle_channel} --debug"
+    if (allow_privileged) {
+        sh "juju config -m ${controller}:${model} kubernetes-master allow-privileged=true"
+        sh "juju config -m ${controller}:${model} kubernetes-worker allow-privileged=true"
+    }
+    retry(5){
+        sh "juju-wait -e ${controller}:${model} -w"
+    }
 }
