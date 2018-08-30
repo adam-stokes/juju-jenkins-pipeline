@@ -2,8 +2,9 @@
  *
  */
 def call() {
-    sh "sudo snap install juju-wait --classic || true"
-    sh "sudo snap install kubectl --classic || true"
-    sh "sudo snap install bundletester --edge --classic || true"
-    sh "sudo pip3 install pipenv"
+    sh "sudo -H snap install juju-wait --classic || true"
+    sh "sudo -H snap install kubectl --classic || true"
+    sh "sudo -H snap install bundletester --edge --classic || true"
+    sh "sudo -H pip3 install pipenv"
+    sh "cd jobs && /usr/local/bin/pipenv install"
 }
