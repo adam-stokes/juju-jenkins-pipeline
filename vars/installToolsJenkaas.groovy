@@ -2,6 +2,7 @@
  *
  */
 def call() {
+    sh "sudo apt install -qyf libffi-dev"
     sh "sudo -H -E python3 -m pip install -U pipenv"
     sh "cd jobs && /usr/local/bin/pipenv install --skip-lock"
 
