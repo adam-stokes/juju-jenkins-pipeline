@@ -5,8 +5,8 @@ def call() {
     // sh "sudo add-apt-repository -y ppa:deadsnakes/ppa"
     // sh "sudo apt update"
     // sh "sudo apt install -qyf libffi-dev python3.6 python3.6-dev python3-dev libffi-dev libssl-dev libxml2-dev libxslt1-dev libjpeg8-dev zlib1g-dev"
-    // sh "sudo -H -E python3.6 -m pip install -U pipenv"
-    // sh "cd jobs && /usr/local/bin/pipenv --python 3.6 install --skip-lock"
+    sh "sudo -H -E python3.6 -m pip install -U pipenv"
+    sh "cd jobs && /usr/local/bin/pipenv --python 3.6 install --skip-lock"
 
     // Charmstore auth
     withCredentials([file(credentialsId: 'charm_creds', variable: 'CHARMCREDS'),
