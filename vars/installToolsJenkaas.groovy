@@ -15,6 +15,6 @@ def call() {
                      file(credentialsId: 'juju_creds', variable: 'JUJUCREDS'),
                      file(credentialsId: 'snapcraft_creds', variable: 'SNAPCRAFTCREDS')]) {
 
-        sh "cd jobs/infra && ansible-playbook playbook-jenkins.yml --extra-vars 'charm_creds=${CHARMCREDS} juju_creds=${JUJUCREDS} snapcraft_creds=${SNAPCRAFTCREDS}'"
+        sh "cd jobs && tox -e py3 -- ansible-playbook infra/playbook-jenkins.yml --extra-vars 'charm_creds=${CHARMCREDS} juju_creds=${JUJUCREDS} snapcraft_creds=${SNAPCRAFTCREDS}'"
     }
 }
