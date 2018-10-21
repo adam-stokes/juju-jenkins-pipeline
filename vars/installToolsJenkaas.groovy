@@ -7,7 +7,6 @@ def call() {
     sh "sudo add-apt-repository -y --remove ppa:ansible/ansible || true"
     sh "sudo apt update"
     sh "sudo apt install -qyf tox"
-    sh "pwd && ls -l"
 
     // Charmstore auth
     withCredentials([file(credentialsId: 'charm_creds', variable: 'CHARMCREDS'),
