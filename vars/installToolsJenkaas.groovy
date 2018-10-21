@@ -2,6 +2,7 @@
  *
  */
 def call() {
+    sh "sudo apt install -f --reinstall python3-minimal"
     sh "sudo update-alternatives --remove-all python3 || true"
     sh "sudo apt install -qyf python3.6"
     sh "sudo add-apt-repository -y ppa:deadsnakes/ppa"
