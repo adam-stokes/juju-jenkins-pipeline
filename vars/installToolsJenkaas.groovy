@@ -13,6 +13,6 @@ def call() {
                      file(credentialsId: 'juju_creds', variable: 'JUJUCREDS'),
                      file(credentialsId: 'snapcraft_creds', variable: 'SNAPCRAFTCREDS')]) {
 
-        sh "cd jobs/infra && /usr/local/bin/pipenv run ansible-playbook playbook-jenkins.yml --extra-vars 'charm_creds=${CHARMCREDS} juju_creds=${JUJUCREDS} snapcraft_creds=${SNAPCRAFTCREDS}'"
+        sh "cd jobs/infra && /usr/local/bin/pipenv run ansible-playbook playbook-jenkins.yml --extra-vars 'charm_creds=${CHARMCREDS} juju_creds=${JUJUCREDS} snapcraft_creds=${SNAPCRAFTCREDS}' -e ansible_python_interpreter=/usr/bin/python3.6"
     }
 }
