@@ -4,11 +4,8 @@
  */
 def call() {
     sh "sudo add-apt-repository -y ppa:deadsnakes/ppa"
-    sh "sudo add-apt-repository -y ppa:ansible/ansible"
     sh "sudo apt update"
     sh "sudo apt install -qyf ansible"
-    sh "sudo -H -E python3.5 -m pip uninstall pipenv"
-    sh "sudo -H -E python3.6 -m pip uninstall pipenv"
 
     // Charmstore auth
     withCredentials([file(credentialsId: 'charm_creds', variable: 'CHARMCREDS'),
