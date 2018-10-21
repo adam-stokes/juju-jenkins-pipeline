@@ -4,12 +4,11 @@
 def call() {
     sh "sudo apt install -f --reinstall python3-minimal"
     sh "sudo update-alternatives --remove-all python3 || true"
-    sh "sudo apt install -qyf python3.6"
     sh "sudo add-apt-repository -y ppa:deadsnakes/ppa"
     sh "sudo apt update"
     sh "sudo apt install -qyf libffi-dev python3.6 python3.6-dev python3-dev libffi-dev libssl-dev libxml2-dev libxslt1-dev libjpeg8-dev zlib1g-dev"
     sh "sudo -H -E python3.5 -m pip install -U pipenv"
-    sh "cd jobs && python3.5 -m pipenv install --skip-lock"
+    sh "cd jobs && python3.5 -m pipenv --python 3.5 install --skip-lock"
 
     // Charmstore auth
     withCredentials([file(credentialsId: 'charm_creds', variable: 'CHARMCREDS'),
