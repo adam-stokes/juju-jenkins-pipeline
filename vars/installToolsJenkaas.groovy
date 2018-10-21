@@ -3,6 +3,7 @@
  */
 def call() {
     sh "sudo update-alternatives --remove-all python3 || true"
+    sh "sudo apt purge -y software-properties-common"
     sh "sudo apt install -qyf software-properties-common"
     sh "sudo add-apt-repository -y ppa:deadsnakes/ppa"
     sh "sudo apt update"
