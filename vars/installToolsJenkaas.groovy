@@ -20,7 +20,4 @@ def call() {
         sh "export SNAPCRAFTCREDS=${SNAPCRAFTCREDS}"
         sh "cd jobs && tox -e py35 -- ansible-playbook infra/playbook-jenkins.yml -e 'ansible_python_interpreter=/usr/bin/python3.5'"
     }
-    sh "juju add-model -c jaas adam-test aws"
-    sh "juju destroy-model -y jaas:adam-test"
-
 }
