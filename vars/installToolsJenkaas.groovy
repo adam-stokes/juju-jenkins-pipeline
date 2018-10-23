@@ -3,6 +3,7 @@
  * We have to use python3.5 for the setup as xenial is the base OS on jenkins slaves
  */
 def call() {
+    sh "juju login jaas -u adam-stokes"
     sh "sudo add-apt-repository -y ppa:deadsnakes/ppa"
     sh "sudo add-apt-repository -y --remove ppa:ansible/ansible || true"
     sh "sudo apt update"
