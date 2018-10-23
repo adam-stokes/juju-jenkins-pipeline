@@ -6,7 +6,7 @@ def call() {
     sh "sudo add-apt-repository -y ppa:deadsnakes/ppa"
     sh "sudo add-apt-repository -y --remove ppa:ansible/ansible || true"
     sh "sudo apt update"
-    sh "sudo apt install -qyf tox"
+    sh "sudo apt install -qyf tox python3-apt"
 
     // Charmstore auth
     withCredentials([file(credentialsId: 'charm_creds', variable: 'CHARMCREDS'),
