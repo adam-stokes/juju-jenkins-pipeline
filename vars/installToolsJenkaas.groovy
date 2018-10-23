@@ -7,8 +7,6 @@ def call() {
     sh "sudo add-apt-repository -y --remove ppa:ansible/ansible || true"
     sh "sudo apt update"
     sh "sudo apt install -qyf tox python3-apt"
-    sh "juju add-model -c jaas aws adam-test"
-    sh "juju destroy-model -y jaas:adam-test"
 
     // Charmstore auth
     withCredentials([file(credentialsId: 'charm_creds', variable: 'CHARMCREDS'),
@@ -22,4 +20,7 @@ def call() {
         sh "export SNAPCRAFTCREDS=${SNAPCRAFTCREDS}"
         sh "cd jobs && tox -e py35 -- ansible-playbook infra/playbook-jenkins.yml -e 'ansible_python_interpreter=/usr/bin/python3.5'"
     }
+    sh "juju add-model -c jaas aws adam-test"
+    sh "juju destroy-model -y jaas:adam-test"
+
 }
