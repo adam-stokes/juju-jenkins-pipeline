@@ -16,6 +16,6 @@ def call() {
         sh "export CHARMCREDS=${CHARMCREDS}"
         sh "export JUJUCREDS=${JUJUCREDS}"
         sh "export SNAPCRAFTCREDS=${SNAPCRAFTCREDS}"
-        sh "cd jobs && tox -e py35 -- ansible-playbook infra/playbook-jenkins.yml"
+        sh "cd jobs && tox -e py35 -- ansible-playbook infra/playbook-jenkins.yml -e 'ansible_python_interpreter=/usr/bin/python3.5'"
     }
 }
