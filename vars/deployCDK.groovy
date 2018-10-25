@@ -15,7 +15,11 @@ def call(Map conf) {
     if (!conf.allow_privileged) {
         conf.allow_privileged = false
     }
-    sh "juju add-model -c ${conf.controller} ${conf.model} ${conf.cloud}"
+    if (conf.cloud) {
+        sh "juju add-model -c ${conf.controller} ${conf.model} ${conf.cloud}"
+    } else {
+        sh "juju add-model -c ${conf.controller} ${conf.model}"
+    }
     sh "juju deploy -m ${conf.controller}:${conf.model} ${conf.bundle} --overlay ${conf.version_overlay} --channel ${conf.bundle_channel}"
     if (conf.allow_privileged) {
         sh "juju config -m ${conf.controller}:${conf.model} kubernetes-master allow-privileged=true"
