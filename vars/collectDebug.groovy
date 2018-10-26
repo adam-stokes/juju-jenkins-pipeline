@@ -7,5 +7,5 @@ def call(String controller,
          String model) {
     sh "cd jobs && wget https://raw.githubusercontent.com/juju-solutions/cdk-field-agent/master/collect.py"
     sh "cd jobs && tox -e py36 -- python3 collect.py -m ${controller}:${model}"
-    archiveArtifacts artifacts: 'results**', fingerprint: true
+    archiveArtifacts artifacts: 'jobs/results**', fingerprint: true
 }
