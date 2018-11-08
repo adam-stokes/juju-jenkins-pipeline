@@ -4,5 +4,5 @@
 def call() {
     sh "sudo ip link set dev docker0 mtu 1458 || true"
     sh "sudo ip link set dev lxdbr0 mtu 1458 || true"
-    sh "sudo ip link set dev lxdbr10 mtu 1458 || true"
+    sh "sudo ip link set dev lxdbr1 mtu 1458 || true"
 }
