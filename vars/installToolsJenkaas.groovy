@@ -12,6 +12,7 @@ def call() {
     withCredentials([file(credentialsId: 'charm_creds', variable: 'CHARMCREDS'),
                      file(credentialsId: 'juju_creds', variable: 'JUJUCREDS'),
                      file(credentialsId: 'jaas_login', variable: 'JAASCREDS'),
+                     file(credentialsId: 'sso_token', variable: 'SSOCREDS'),
                      file(credentialsId: 'aws_creds', variable: 'AWSCREDS'),
                      file(credentialsId: 'snapcraft_creds', variable: 'SNAPCRAFTCREDS')]) {
 
@@ -20,6 +21,7 @@ def call() {
         sh "export JAASCREDS=${JAASCREDS}"
         sh "export SNAPCRAFTCREDS=${SNAPCRAFTCREDS}"
         sh "export AWSCREDS=${AWSCREDS}"
+        sh "export SSOCREDS=${SSOCREDS}"
         sh "cd jobs && tox -e py35 -- ansible-playbook infra/playbook-jenkins.yml -e 'ansible_python_interpreter=/usr/bin/python3.5'"
     }
 }
