@@ -7,7 +7,7 @@
  */
 def call(String controller,
          String model,
-         String version = '0.12.0') {
+         String version = '0.12.1') {
         sh "wget -qO sonobuoy.tar.gz https://github.com/heptio/sonobuoy/releases/download/v${version}/sonobuoy_${version}_linux_amd64.tar.gz"
         sh "tar xvf sonobuoy.tar.gz"
         sh "mkdir -p $HOME/.kube"
