@@ -32,7 +32,6 @@ def call(Map conf) {
         sh "juju config -m ${conf.controller}:${conf.model} kubernetes-master allow-privileged=true"
         sh "juju config -m ${conf.controller}:${conf.model} kubernetes-worker allow-privileged=true"
     }
-    retry(5){
-        sh "juju-wait -e ${conf.controller}:${conf.model} -w"
-    }
+
+    sh "juju-wait -e ${conf.controller}:${conf.model} -w"
 }
