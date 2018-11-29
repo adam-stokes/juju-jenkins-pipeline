@@ -20,7 +20,7 @@ def call(Map conf) {
         conf.bundle_channel = 'edge'
     }
     if (!conf.charms_channel) {
-        conf.charms_channel = ""  // is this needed?  will we get a "null" without it?
+        conf.charms_channel = ""  // prevent "null" in command
     } else {
         conf.charms_channel = "--channel ${conf.charms_channel}"
     }
