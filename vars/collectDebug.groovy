@@ -8,6 +8,5 @@ def call(String controller,
     sh "cd jobs && wget https://raw.githubusercontent.com/juju-solutions/cdk-field-agent/master/collect.py"
     sh "cd jobs && tox -e py36 -- python3 collect.py -m ${controller}:${model}"
     sh "cd jobs && tox -e py36 -- python3 infra/collect-debug.py push results*.tar.gz"
-    sh "cd jobs && tox -e py36 -- python3 infra/collect-debug.py push logs"
     archiveArtifacts artifacts: 'jobs/results**', fingerprint: true
 }
