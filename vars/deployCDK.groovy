@@ -15,7 +15,6 @@
 def call(Map conf) {
     def collect_debug_sh = "tox -e py36 -- python3 infra/collect-debug.py"
     sh "cd jobs && ${collect_debug_sh} starttime"
-    sh "cd jobs && ${collect_debug_sh} set-meta"
 
     if (!conf.cloud) {
         conf.cloud = 'aws'
