@@ -13,9 +13,6 @@
  *                           as localhost that need lxd profiles update prior to deploy
  */
 def call(Map conf) {
-    def collect_debug_sh = "tox -e py36 -- python3 infra/collect-debug.py"
-    sh "cd jobs && ${collect_debug_sh} starttime"
-
     if (!conf.cloud) {
         conf.cloud = 'aws'
     }
