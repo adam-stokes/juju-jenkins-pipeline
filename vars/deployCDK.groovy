@@ -11,6 +11,7 @@
  *    conf.allow_privileged enable allow privileged in k8s master/worker
  *    conf.disable_add_model do not run add-model, this is due to factors such
  *                           as localhost that need lxd profiles update prior to deploy
+ *    conf.disable_wait do not wait after deployment
  */
 def call(Map conf) {
     if (!conf.cloud) {
@@ -44,5 +45,7 @@ def call(Map conf) {
         sh "juju config -m ${conf.controller}:${conf.model} kubernetes-worker allow-privileged=true"
     }
 
-    sh "juju-wait -e ${conf.controller}:${conf.model} -w"
+    if (!conf.disable_wait) {
+        sh "juju-wait -e ${conf.controller}:${conf.model} -w"
+    }
 }
