@@ -5,6 +5,7 @@
  *    conf.model juju model to use
  *    conf.cloud juju cloud in a cloud/region format
  *    conf.version_overlay path to bundle overlay for defining k8s versions
+ *    conf.custom_bundle path to a custom bundle
  *    conf.bundle_channel juju charmstore channel to pull bundle from
  *                        (note: this only affects the channel of the bundle)
  *    conf.charms_channel juju charmstore channel to force all charms within the bundle to
@@ -38,8 +39,12 @@ def call(Map conf) {
     // There is no way to tell Juju to use a specific channel of a bundle but
     // to leave the contents unmodified, so we have to pull a local copy of the
     // channel that we want.
-    sh "charm pull ${conf.bundle} --channel ${conf.bundle_channel} ./bundle-to-test"
-    sh "juju deploy -m ${conf.controller}:${conf.model} ./bundle-to-test/bundle.yaml --overlay ${conf.version_overlay} ${conf.charms_channel}"
+    if (conf.custom_bundle) {
+        sh "juju deploy -m ${conf.controller}:${conf.model} ${conf.custom.bundle}"
+    } else {
+        sh "charm pull ${conf.bundle} --channel ${conf.bundle_channel} ./bundle-to-test"
+        sh "juju deploy -m ${conf.controller}:${conf.model} ./bundle-to-test/bundle.yaml --overlay ${conf.version_overlay} ${conf.charms_channel}"
+    }
     if (conf.allow_privileged) {
         sh "juju config -m ${conf.controller}:${conf.model} kubernetes-master allow-privileged=true"
         sh "juju config -m ${conf.controller}:${conf.model} kubernetes-worker allow-privileged=true"
