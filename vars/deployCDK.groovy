@@ -40,7 +40,7 @@ def call(Map conf) {
     // to leave the contents unmodified, so we have to pull a local copy of the
     // channel that we want.
     if (conf.custom_bundle) {
-        sh "juju deploy -m ${conf.controller}:${conf.model} ${conf.custom.bundle}"
+        sh "juju deploy -m ${conf.controller}:${conf.model} ${conf.custom_bundle}"
     } else {
         sh "charm pull ${conf.bundle} --channel ${conf.bundle_channel} ./bundle-to-test"
         sh "juju deploy -m ${conf.controller}:${conf.model} ./bundle-to-test/bundle.yaml --overlay ${conf.version_overlay} ${conf.charms_channel}"
