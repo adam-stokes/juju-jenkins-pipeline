@@ -26,6 +26,11 @@ def call(Map conf) {
     } else {
         conf.charms_channel = "--channel ${conf.charms_channel}"
     }
+    if (!conf.version_overlay) {
+        conf.version_overlay = ""
+    } else {
+        conf.version_overlay = "--overlay ${conf.version_overlay}"
+    }
     if (!conf.allow_privileged) {
         conf.allow_privileged = false
     }
@@ -43,7 +48,7 @@ def call(Map conf) {
         sh "juju deploy -m ${conf.controller}:${conf.model} ${conf.custom_bundle}"
     } else {
         sh "charm pull ${conf.bundle} --channel ${conf.bundle_channel} ./bundle-to-test"
-        sh "juju deploy -m ${conf.controller}:${conf.model} ./bundle-to-test/bundle.yaml --overlay ${conf.version_overlay} ${conf.charms_channel}"
+        sh "juju deploy -m ${conf.controller}:${conf.model} ./bundle-to-test/bundle.yaml ${conf.version_overlay} ${conf.charms_channel}"
     }
     if (conf.allow_privileged) {
         sh "juju config -m ${conf.controller}:${conf.model} kubernetes-master allow-privileged=true"
