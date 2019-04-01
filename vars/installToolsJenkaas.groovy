@@ -6,7 +6,7 @@ def call() {
     sh "sudo add-apt-repository -y ppa:deadsnakes/ppa"
     sh "sudo add-apt-repository -y --remove ppa:ansible/ansible || true"
     sh "sudo apt update"
-    sh "sudo apt install -qyf tox python3-apt"
+    sh "sudo apt install -qyf tox python3-apt virtualenv"
 
     // Charmstore auth
     withCredentials([file(credentialsId: 'charm_creds', variable: 'CHARMCREDS'),
@@ -30,6 +30,9 @@ def call() {
         sh "export CDKBOTSSHCREDS=${CDKBOTSSHCREDS}"
         sh "export SCAPESTACKCREDS=${SCAPESTACKCREDS}"
         sh "export SCAPESTACKCLOUD=${SCAPESTACKCLOUD}"
-        sh "cd jobs && tox -e py35 -- ansible-playbook infra/playbook-jenkins.yml -e 'ansible_python_interpreter=/usr/bin/python3.5'"
+        sh "virtualenv --python=python3.5 /var/lib/jenkins/venvs/ansible"
+        sh "virtualenv --python=python3.6 /var/lib/jenkins/venvs/ci"
+        sh "/var/lib/jenkins/venvs/ansible/bin/pip3 install -r jobs/requirements.txt"
+        sh "cd jobs && /var/lib/jenkins/venvs/ansible/bin/ansible-playbook infra/playbook-jenkins.yml"
     }
 }
