@@ -5,10 +5,11 @@
  */
 def call(String controller,
          String model) {
-    def collect_debug_sh = "tox -e py36 -- python3 infra/collect-debug.py"
+    def py3 = "/var/lib/jenkins/venvs/ci/bin/python3"
+    def collect_debug_sh = "${py3} infra/collect-debug.py"
     sh "cd jobs && wget https://raw.githubusercontent.com/juju-solutions/cdk-field-agent/master/collect.py"
-    sh "cd jobs && tox -e py36 -- python3 collect.py -m ${controller}:${model}"
-    sh "cd jobs && ${collect_debug_sh} push --key-id 'field-agent' results*.tar.gz"
+    sh "cd jobs && ${py3} collect.py -m ${controller}:${model}"
+    sh "cd jobs && ${py3} push --key-id 'field-agent' results*.tar.gz"
 
     archiveArtifacts artifacts: 'jobs/results**', fingerprint: true
 }
