@@ -20,6 +20,13 @@ def call() {
                      file(credentialsId: 'scapestack_creds', variable: 'SCAPESTACKCREDS'),
                      file(credentialsId: 'scapestack_cloud', variable: 'SCAPESTACKCLOUD')]) {
 
+        // Setup python envs
+        sh "virtualenv --python=python3.5 /var/lib/jenkins/venvs/ansible"
+        sh "virtualenv --python=python3.6 /var/lib/jenkins/venvs/ci"
+        sh "/var/lib/jenkins/venvs/ansible/bin/pip3 install -r jobs/requirements.txt"
+        sh "/var/lib/jenkins/venvs/ci/bin/pip3 install -r jobs/requirements.txt"
+
+
         sh "export CHARMCREDS=${CHARMCREDS}"
         sh "export JUJUCREDS=${JUJUCREDS}"
         sh "export JAASCREDS=${JAASCREDS}"
@@ -30,9 +37,6 @@ def call() {
         sh "export CDKBOTSSHCREDS=${CDKBOTSSHCREDS}"
         sh "export SCAPESTACKCREDS=${SCAPESTACKCREDS}"
         sh "export SCAPESTACKCLOUD=${SCAPESTACKCLOUD}"
-        sh "virtualenv --python=python3.5 /var/lib/jenkins/venvs/ansible"
-        sh "virtualenv --python=python3.6 /var/lib/jenkins/venvs/ci"
-        sh "/var/lib/jenkins/venvs/ansible/bin/pip3 install -r jobs/requirements.txt"
-        sh "cd jobs && /var/lib/jenkins/venvs/ansible/bin/ansible-playbook infra/playbook-jenkins.yml"
+        sh "cd jobs && /var/lib/jenkins/venvs/ansible/bin/ansible-playbook infra/playbook-jenkins.yml -e 'ansible_python_interpreter=/usr/bin/python3.5'"
     }
 }
