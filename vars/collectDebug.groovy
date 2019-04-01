@@ -5,7 +5,7 @@
  */
 def call(String controller,
          String model) {
-    def py3 = "/var/lib/jenkins/venvs/ci/bin/python3"
+    def py3 = "/var/lib/jenkins/venvs/ci/bin/python3.6"
     def collect_debug_sh = "${py3} infra/collect-debug.py"
     sh "cd jobs && wget https://raw.githubusercontent.com/juju-solutions/cdk-field-agent/master/collect.py"
     sh "cd jobs && ${py3} collect.py -m ${controller}:${model}"
