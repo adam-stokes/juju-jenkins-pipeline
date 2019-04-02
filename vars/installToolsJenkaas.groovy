@@ -4,7 +4,6 @@
  */
 def call() {
     sh "sudo add-apt-repository -y ppa:deadsnakes/ppa"
-    sh "sudo add-apt-repository -y --remove ppa:ansible/ansible || true"
     sh "sudo apt update"
     sh "sudo apt install -qyf tox python3-apt virtualenv"
 
@@ -21,6 +20,7 @@ def call() {
                      file(credentialsId: 'scapestack_cloud', variable: 'SCAPESTACKCLOUD')]) {
 
         // Setup python envs
+        sh "rm -rf /var/lib/jenkins/venvs || true"
         sh "virtualenv --python=python3.5 /var/lib/jenkins/venvs/ansible"
         sh "virtualenv --python=python3.6 /var/lib/jenkins/venvs/ci"
         sh "/var/lib/jenkins/venvs/ansible/bin/pip3 install -r jobs/requirements.txt"
