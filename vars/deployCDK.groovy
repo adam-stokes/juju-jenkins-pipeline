@@ -56,6 +56,6 @@ def call(Map conf) {
     }
 
     if (!conf.disable_wait) {
-        sh "juju-wait -e ${conf.controller}:${conf.model} -wv -r3 -t7200"
+        sh "juju-wait -e ${conf.controller}:${conf.model} -wv -r3 -t14400"
     }
 }
