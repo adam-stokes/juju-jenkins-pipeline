@@ -6,8 +6,9 @@
 def call(String controller,
          String model) {
     sh "cd jobs && wget https://raw.githubusercontent.com/juju-solutions/cdk-field-agent/master/collect.py"
-    sh "cd jobs && ${utils.cipy} collect.py -m ${controller}:${model}"
-    sh "cd jobs && ${utils.cipy} infra/collect-debug.py push --key-id 'field-agent' results*.tar.gz"
+    sh "cd jobs && ${utils.cipy} collect.py -m ${controller}:${model} || true"
+    sh "cd jobs && ${utils.cipy} infra/collect-debug.py push --key-id 'results_file' results*.tar.gz"
+    sh "cd jobs && ${utils.cipy} infra/collect-debug.py push --key-id 'debug' debug.txt"
 
     archiveArtifacts artifacts: 'jobs/results**', fingerprint: true
 }
