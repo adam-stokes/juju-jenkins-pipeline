@@ -4,3 +4,4 @@ import groovy.transform.Field
 @Field cipy = "${cibin}/python3.6"
 @Field pytest = "${cibin}/pytest -v -s"
 @Field cipaths = "${cibin}:/snap/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/bin"
+@Field debug_out = "2>&1 | tee -a debug.txt"
