@@ -23,7 +23,7 @@ def call() {
         sh "rm -rf /var/lib/jenkins/venvs || true"
         sh "virtualenv --python=python3.5 /var/lib/jenkins/venvs/ansible"
         sh "virtualenv --python=python3.6 /var/lib/jenkins/venvs/ci"
-        sh "/var/lib/jenkins/venvs/ansible/bin/pip3 install -r jobs/requirements.txt"
+        sh "/var/lib/jenkins/venvs/ansible/bin/pip3 install ansible"
         sh "/var/lib/jenkins/venvs/ci/bin/pip3 install -r jobs/requirements.txt"
 
 
