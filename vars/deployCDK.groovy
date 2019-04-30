@@ -15,6 +15,7 @@
  *    conf.disable_wait do not wait after deployment
  */
 def call(Map conf) {
+    sh "set -o pipefail"
     if (!conf.cloud) {
         conf.cloud = 'aws'
     }
