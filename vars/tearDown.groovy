@@ -1,8 +1,6 @@
 /* Tear down environment
  *
  */
-def call(String controller,
-         String model) {
-    sh "rm -rf $HOME/.kube || true"
-    sh "juju destroy-model -y ${controller}:${model}"
+def call(String controller) {
+    sh "juju destroy-controller --destroy-all-models -y ${controller} || true"
 }
