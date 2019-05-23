@@ -9,5 +9,5 @@ def call(String controller,
     sh "juju scp -m ${controller}:${model} kubernetes-master/0:config $HOME/.kube/"
     sh "export RBAC_ENABLED=\$(kubectl api-versions | grep \"rbac.authorization.k8s.io/v1beta1\" -c)"
     sh "/var/lib/jenkins/go/bin/sonobuoy version || true"
-    sh "/var/lib/jenkins/go/bin/sonobuoy run --wait"
+    sh "/var/lib/jenkins/go/bin/sonobuoy run"
 }
