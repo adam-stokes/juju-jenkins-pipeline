@@ -2,5 +2,5 @@
  *
  */
 def call(String controller) {
-    sh "juju destroy-controller --destroy-all-models -y ${controller} || true"
+    sh "juju destroy-controller --destroy-all-models --destroy-storage -y ${controller} || true"
 }

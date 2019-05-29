@@ -7,7 +7,7 @@ def call() {
     def controllers_yaml = readYaml text:sh(script: "juju controllers --format yaml", returnStdout: true)
     controllers_yaml.controllers.each { key, data ->
         if (key != 'jaas') {
-            sh "juju destroy-controller --destroy-all-models -y ${key} || true"
+            sh "juju destroy-controller --destroy-all-models --destroy-storage -y ${key} || true"
         }
     }
 }
