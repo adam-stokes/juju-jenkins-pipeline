@@ -16,6 +16,8 @@ def call() {
                      file(credentialsId: 'snapcraft_cpc_creds', variable: 'SNAPCRAFTCPCCREDS'),
                      file(credentialsId: 'cdkbot_ssh_rsa', variable: 'CDKBOTSSHCREDS'),
                      file(credentialsId: 'snapcraft_creds', variable: 'SNAPCRAFTCREDS'),
+                     file(credentialsId: 'NEADER', variable: 'NEADER'),
+                     file(credentialsId: 'S3LP3', variable: 'S3LP3'),
                      file(credentialsId: 'scapestack_creds', variable: 'SCAPESTACKCREDS'),
                      file(credentialsId: 'scapestack_cloud', variable: 'SCAPESTACKCLOUD')]) {
 
@@ -37,6 +39,8 @@ def call() {
         sh "export CDKBOTSSHCREDS=${CDKBOTSSHCREDS}"
         sh "export SCAPESTACKCREDS=${SCAPESTACKCREDS}"
         sh "export SCAPESTACKCLOUD=${SCAPESTACKCLOUD}"
+        sh "export NEADER=${NEADER}"
+        sh "export S3LP3=${S3LP3}"
         sh "cd jobs && /var/lib/jenkins/venvs/ansible/bin/ansible-playbook infra/playbook-jenkins.yml -e 'ansible_python_interpreter=/usr/bin/python3.5'"
     }
 }
