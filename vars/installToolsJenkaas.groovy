@@ -41,6 +41,6 @@ def call() {
         sh "export SCAPESTACKCLOUD=${SCAPESTACKCLOUD}"
         sh "export NEADER=${NEADER}"
         sh "export S3LP3=${S3LP3}"
-        sh "cd jobs && /var/lib/jenkins/venvs/ansible/bin/ansible-playbook infra/playbook-jenkins.yml -e 'ansible_python_interpreter=/usr/bin/python3.5' --limit localhost --tags 'jenkins'"
+        sh "cd jobs && /var/lib/jenkins/venvs/ansible/bin/ansible-playbook infra/playbook-jenkins.yml -e 'ansible_python_interpreter=/usr/bin/python3.5' --limit localhost --tags 'jenkins' -i infra/hosts"
     }
 }
