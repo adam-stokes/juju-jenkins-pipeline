@@ -24,10 +24,10 @@ def call() {
         // Setup python envs
         sh "rm -rf /var/lib/jenkins/venvs || true"
         sh "source /usr/share/virtualenvwrapper/virtualenvwrapper.sh"
-        sh "mkvirtualenv --python=python3.5 ansible"
-        sh "mkvirtualenv --python=python3.6 jenkins"
-        sh "workon ansible && pip3 install ansible"
-        sh "workon jenkins && pip3 install -r jobs/requirements.txt"
+        sh "mkvirtualenv --python=python3.5 -i ansible ansible || true"
+        sh "mkvirtualenv --python=python3.6 -r jobs/requirements.txt jenkins || true"
+        // sh "workon ansible && pip3 install ansible"
+        // sh "workon jenkins && pip3 install -r jobs/requirements.txt"
 
 
         sh "export CHARMCREDS=${CHARMCREDS}"
