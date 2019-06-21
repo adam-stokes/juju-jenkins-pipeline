@@ -5,7 +5,7 @@
 def call() {
     sh "sudo add-apt-repository -y ppa:deadsnakes/ppa"
     sh "sudo apt update"
-    sh "sudo apt install -qyf tox python3-apt virtualenv"
+    sh "sudo apt install -qyf tox python3-apt virtualenvwrapper"
 
     // Charmstore auth
     withCredentials([file(credentialsId: 'charm_creds', variable: 'CHARMCREDS'),
@@ -23,10 +23,11 @@ def call() {
 
         // Setup python envs
         sh "rm -rf /var/lib/jenkins/venvs || true"
-        sh "virtualenv --python=python3.5 /var/lib/jenkins/venvs/ansible"
-        sh "virtualenv --python=python3.6 /var/lib/jenkins/venvs/ci"
-        sh "/var/lib/jenkins/venvs/ansible/bin/pip3 install ansible"
-        sh "/var/lib/jenkins/venvs/ci/bin/pip3 install -r jobs/requirements.txt"
+        sh "source /usr/share/virtualenvwrapper/virtualenvwrapper.sh"
+        sh "mkvirtualenv --python=python3.5 ansible"
+        sh "mkvirtualenv --python=python3.6 jenkins"
+        sh "workon ansible && pip3 install ansible"
+        sh "workon jenkins && pip3 install -r jobs/requirements.txt"
 
 
         sh "export CHARMCREDS=${CHARMCREDS}"
@@ -41,6 +42,6 @@ def call() {
         sh "export SCAPESTACKCLOUD=${SCAPESTACKCLOUD}"
         sh "export NEADER=${NEADER}"
         sh "export S3LP3=${S3LP3}"
-        sh "cd jobs && /var/lib/jenkins/venvs/ansible/bin/ansible-playbook infra/playbook-jenkins.yml -e 'ansible_python_interpreter=/usr/bin/python3.5' --limit localhost --tags 'jenkins' -i infra/hosts"
+        sh "workon ansible && cd jobs && ansible-playbook infra/playbook-jenkins.yml -e 'ansible_python_interpreter=/usr/bin/python3.5' --limit localhost --tags 'jenkins' -i infra/hosts"
     }
 }
