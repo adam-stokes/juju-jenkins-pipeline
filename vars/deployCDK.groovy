@@ -20,7 +20,9 @@ def call(Map conf) {
         conf.cloud = 'aws'
     }
     if (!conf.bundle_channel) {
-        conf.bundle_channel = 'edge'
+        conf.bundle_channel = ""
+    } else {
+        conf.bundle_channel = "--channel ${conf.bundle_channel}"
     }
     if (!conf.charms_channel) {
         conf.charms_channel = ""  // prevent "null" in command
@@ -48,7 +50,7 @@ def call(Map conf) {
     if (conf.custom_bundle) {
         sh "juju deploy -m ${conf.controller}:${conf.model} ${conf.custom_bundle}"
     } else {
-        sh "charm pull ${conf.bundle} --channel ${conf.bundle_channel} ./bundle-to-test"
+        sh "charm pull ${conf.bundle} ${conf.bundle_channel} ./bundle-to-test"
         sh "juju deploy -m ${conf.controller}:${conf.model} ./bundle-to-test/bundle.yaml ${conf.version_overlay} ${conf.charms_channel}"
     }
     if (conf.allow_privileged) {
